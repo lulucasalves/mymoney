@@ -18,4 +18,8 @@ export const Base = styled.button`
   text-align: ${props => (props.textAlign ? props.textAlign : 'center')};
   line-height: ${props => (props.lineHeight ? props.lineHeight : '24px')};
   letter-spacing: ${props => (props.letterSpacing ? props.letterSpacing : '')};
+
+  @media (max-width: 900px) {
+    padding: 10px 15px;
+  }
 `

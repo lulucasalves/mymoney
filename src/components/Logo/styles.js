@@ -13,4 +13,8 @@ export const Title = styled.h1`
   text-align: ${props => (props.textAlign ? props.textAlign : '')};
   line-height: ${props => (props.lineHeight ? props.lineHeight : '')};
   letter-spacing: ${props => (props.letterSpacing ? props.letterSpacing : '')};
+
+  @media (max-width: 900px){
+    margin: 3px 0 0 15px;
+  }
 `

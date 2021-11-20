@@ -13,7 +13,10 @@ import {
   Td,
   Container,
   ItemsDiv,
-  LResponsiveCard
+  LResponsiveCard,
+  Table,
+  ResponsiveTable,
+  ResponsiveContainerModal
 } from './styles'
 import { Logo } from '../components/Logo'
 import { ButtonNewTransaction } from '../components/ButtonNewTransaction'
@@ -48,7 +51,7 @@ export function Template(props) {
       value: 12000,
       title: 'Wage',
       category: 'Work',
-      data: '13/04/2021'
+      date: '10/04/2021'
     },
     {
       id: 2,
@@ -56,7 +59,7 @@ export function Template(props) {
       value: -9000,
       title: 'House rent',
       category: 'House',
-      data: '15/02/2021'
+      date: '10/08/2021'
     },
     {
       id: 3,
@@ -64,11 +67,9 @@ export function Template(props) {
       value: -500,
       title: 'Month purchases',
       category: 'Feeding',
-      data: '11/02/2021'
+      date: '11/02/2021'
     }
   ])
-
-  console.log(items)
 
   function MouseOut(ref) {
     useEffect(() => {
@@ -121,6 +122,30 @@ export function Template(props) {
     setStates({ positive: somaP, negative: somaN, total: soma })
   }, [items])
 
+  function setColor(type) {
+    if (type == 'output') {
+      return '#E62E4D'
+    } else {
+      return '#59E67F'
+    }
+  }
+
+  const months = [
+    'Jan',
+    'Fev',
+    'Mar',
+    'Abr',
+    'Mai',
+    'Jun',
+    'Jul',
+    'Ago',
+    'Set',
+    'Out',
+    'Nov',
+    'Dez'
+  ]
+  let date = new Date(items[items.length - 1].date)
+  let dateFormated = date.getDate() + ' ' + months[date.getMonth()]
   function LandingPage() {
     return (
       <>
@@ -195,6 +220,9 @@ export function Template(props) {
                     <IEntrance />
                   </LDiv>
                   <CardValue>$ {states.positive},00</CardValue>
+                  <CardTitle color="#969cb2">
+                    Last entry day {dateFormated}
+                  </CardTitle>
                 </LCard>
                 <LCard>
                   <LDiv
@@ -222,42 +250,85 @@ export function Template(props) {
                 </LCard>
               </Carousel>
             </LResponsiveCard>
-            <table
-              cellspacing="0"
-              cellpadding="0"
-              style={{ borderSpacing: '0 8px' }}
-            >
-              <thead type="row">
-                <Tr background="none">
-                  <Td widh="350px">
-                    <TableText>Items</TableText>
-                  </Td>
-                  <Td>
-                    <TableText>Transaction</TableText>
-                  </Td>
-                  <Td>
-                    <TableText>Category</TableText>
-                  </Td>
-                  <Td widh="250px">
-                    <TableText>Data</TableText>
-                  </Td>
-                </Tr>
-              </thead>
-              <Tbody>
+
+            <Table>
+              <table
+                cellspacing="0"
+                cellpadding="0"
+                style={{ borderSpacing: '0 8px' }}
+              >
+                <thead type="row">
+                  <Tr background="none">
+                    <Td widh="350px">
+                      <TableText>Items</TableText>
+                    </Td>
+                    <Td>
+                      <TableText>Transaction</TableText>
+                    </Td>
+                    <Td>
+                      <TableText>Category</TableText>
+                    </Td>
+                    <Td widh="250px">
+                      <TableText>Date</TableText>
+                    </Td>
+                  </Tr>
+                </thead>
+                <Tbody>
+                  {items.map(item => {
+                    return (
+                      <Tr key={item.id}>
+                        <Td widh="350px">{item.title}</Td>
+                        <Td type={item.type}>$ {item.value},00</Td>
+                        <Td color="#969cb2">{item.category}</Td>
+                        <Td widh="250px" color="#969cb2">
+                          {item.date}
+                        </Td>
+                      </Tr>
+                    )
+                  })}
+                </Tbody>
+              </table>
+            </Table>
+
+            <ResponsiveTable margin="32px 0 16px 0">
+              <LDiv display="flex" justifyContent="space-between">
+                <CardTitle color="#121317" fontSize="1.25rem">
+                  Listing
+                </CardTitle>
+                <CardTitle color="#969cb2" fontWeight="500">
+                  {items.length} items
+                </CardTitle>
+              </LDiv>
+
+              <LDiv justifyContent="center">
                 {items.map(item => {
                   return (
-                    <Tr key={item.id}>
-                      <Td widh="350px">{item.title}</Td>
-                      <Td type={item.type}>$ {item.value},00</Td>
-                      <Td color="#969cb2">{item.category}</Td>
-                      <Td widh="250px" color="#969cb2">
-                        {item.data}
-                      </Td>
-                    </Tr>
+                    <LCard
+                      key={item.id}
+                      padding="17px 24px"
+                      margin="16px auto 8px auto"
+                      height="128px"
+                      width="100%"
+                    >
+                      <CardTitle margin=" 0 0 2px 0">{item.title}</CardTitle>
+                      <CardValue
+                        lineHeight="30px"
+                        fontWeight="400"
+                        margin="0 0 20px 0"
+                        fontSize="1.25rem"
+                        color={setColor(item.type)}
+                      >
+                        $ {item.value},00
+                      </CardValue>
+                      <LDiv display="flex" justifyContent="space-between">
+                        <CardTitle color="#969cb2">{item.category}</CardTitle>
+                        <CardTitle color="#969cb2">{item.date}</CardTitle>
+                      </LDiv>
+                    </LCard>
                   )
                 })}
-              </Tbody>
-            </table>
+              </LDiv>
+            </ResponsiveTable>
           </LItemsDiv>
         </LContainer>
       </>
@@ -309,7 +380,7 @@ export function Template(props) {
           value: convertVal(parseInt(val.price), val.status),
           title: capitalize(val.name),
           category: capitalize(val.category),
-          data: currentDateFormated2
+          date: currentDateFormated2
         }
       ])
 
@@ -317,128 +388,276 @@ export function Template(props) {
     }
 
     return (
-      <MContainer>
-        <MItemsDiv ref={modalOut}>
-          <FormTitle margin="0 0 32px 0">Register Transaction</FormTitle>
-          <MDiv
-            position="absolute"
-            top="21px"
-            right="21px"
-            cursor="pointer"
-            onClick={() => setActive({ ...active, modalState: false })}
-          >
-            <IClose />
-          </MDiv>
-          <MDiv>
-            <Formik
-              initialValues={{
-                name: '',
-                price: '',
-                status: '',
-                category: ''
-              }}
-              validationSchema={registerSchema}
-              onSubmit={values => {
-                save(values)
-              }}
+      <>
+        <MContainer>
+          <MItemsDiv ref={modalOut}>
+            <FormTitle margin="0 0 32px 0">Register Transaction</FormTitle>
+            <MDiv
+              position="absolute"
+              top="21px"
+              right="21px"
+              cursor="pointer"
+              onClick={() => setActive({ ...active, modalState: false })}
             >
-              {({
-                handleChange,
-                handleBlur,
-                values,
-                errors,
-                touched,
-                handleSubmit
-              }) => (
-                <>
-                  <MDiv>
-                    <FormInput
-                      required
-                      id="name"
-                      placeholder="Name"
-                      name="name"
-                      autoComplete="current-name"
-                      type="text"
-                      onChange={handleChange('name')}
-                      onBlur={handleBlur('name')}
-                      value={values.name}
-                      margin="0 0 16px 0"
-                      errors={errors.name && touched.name}
-                    />
-                    {errors.name && touched.name}
-                  </MDiv>
+              <IClose />
+            </MDiv>
+            <MDiv>
+              <Formik
+                initialValues={{
+                  name: '',
+                  price: '',
+                  status: '',
+                  category: ''
+                }}
+                validationSchema={registerSchema}
+                onSubmit={values => {
+                  save(values)
+                }}
+              >
+                {({
+                  handleChange,
+                  handleBlur,
+                  values,
+                  errors,
+                  touched,
+                  handleSubmit
+                }) => (
+                  <>
+                    <MDiv>
+                      <FormInput
+                        required
+                        id="name"
+                        placeholder="Name"
+                        name="name"
+                        autoComplete="current-name"
+                        type="text"
+                        onChange={handleChange('name')}
+                        onBlur={handleBlur('name')}
+                        value={values.name}
+                        margin="0 0 16px 0"
+                        errors={errors.name && touched.name}
+                      />
+                      {errors.name && touched.name}
+                    </MDiv>
 
-                  <MDiv>
-                    <FormInput
-                      required
-                      id="price"
-                      placeholder="Price"
-                      name="price"
-                      autoComplete="current-price"
-                      onChange={handleChange('price')}
-                      onBlur={handleBlur('price')}
-                      value={values.price}
-                      margin="0 0 16px 0"
-                      errors={errors.price && touched.price}
-                    />
-                    {errors.price && touched.price}
-                  </MDiv>
+                    <MDiv>
+                      <FormInput
+                        required
+                        id="price"
+                        placeholder="Price"
+                        name="price"
+                        autoComplete="current-price"
+                        onChange={handleChange('price')}
+                        onBlur={handleBlur('price')}
+                        value={values.price}
+                        margin="0 0 16px 0"
+                        errors={errors.price && touched.price}
+                      />
+                      {errors.price && touched.price}
+                    </MDiv>
 
-                  <MDiv
-                    display="flex"
-                    justifyContent="space-between"
-                    errors={errors.status && touched.status}
-                    value={(values.status = active.value)}
-                  >
-                    <MCard
-                      border={active.type == true}
-                      onClick={() =>
-                        setActive({ ...active, value: 'entry', type: true })
-                      }
+                    <MDiv
+                      display="flex"
+                      justifyContent="space-between"
+                      errors={errors.status && touched.status}
+                      value={(values.status = active.value)}
                     >
-                      <IEntrance />
-                      <CardTitle>Entry</CardTitle>
-                    </MCard>
-                    <MCard
-                      border={active.type == false}
-                      onClick={() =>
-                        setActive({ ...active, value: 'output', type: false })
-                      }
-                      padding="0 70px"
+                      <MCard
+                        border={active.type == true}
+                        onClick={() =>
+                          setActive({ ...active, value: 'entry', type: true })
+                        }
+                      >
+                        <IEntrance />
+                        <CardTitle>Entry</CardTitle>
+                      </MCard>
+                      <MCard
+                        border={active.type == false}
+                        onClick={() =>
+                          setActive({ ...active, value: 'output', type: false })
+                        }
+                        padding="0 70px"
+                      >
+                        <IExit />
+                        <CardTitle> Output</CardTitle>
+                      </MCard>
+                      {errors.status && touched.status}
+                    </MDiv>
+
+                    <MDiv>
+                      <FormInput
+                        required
+                        id="category"
+                        placeholder="Category"
+                        name="category"
+                        autoComplete="current-category"
+                        onChange={handleChange('category')}
+                        onBlur={handleBlur('category')}
+                        value={values.category}
+                        margin="0 0 24px 0"
+                        errors={errors.category && touched.category}
+                      />
+                      {errors.category && touched.category}
+                    </MDiv>
+
+                    <MDiv>
+                      <ButtonRegister onClick={() => handleSubmit()}>
+                        Register
+                      </ButtonRegister>
+                    </MDiv>
+                  </>
+                )}
+              </Formik>
+            </MDiv>
+          </MItemsDiv>
+        </MContainer>
+
+        <ResponsiveContainerModal top="100%">
+          <MItemsDiv
+            margin="0 auto 0 0"
+            top="522px"
+            padding="24px"
+            ref={modalOut}
+            width="100%"
+            height="446px"
+            borderRadius="16px 16px 0 0"
+          >
+            <FormTitle margin="0 0 24px 0">Register Transaction</FormTitle>
+            <MDiv
+              position="absolute"
+              top="33px"
+              right="24px"
+              cursor="pointer"
+              onClick={() => setActive({ ...active, modalState: false })}
+            >
+              <IClose />
+            </MDiv>
+            <MDiv>
+              <Formik
+                initialValues={{
+                  name: '',
+                  price: '',
+                  status: '',
+                  category: ''
+                }}
+                validationSchema={registerSchema}
+                onSubmit={values => {
+                  save(values)
+                }}
+              >
+                {({
+                  handleChange,
+                  handleBlur,
+                  values,
+                  errors,
+                  touched,
+                  handleSubmit
+                }) => (
+                  <>
+                    <MDiv>
+                      <FormInput
+                        required
+                        id="name"
+                        placeholder="Name"
+                        name="name"
+                        autoComplete="current-name"
+                        type="text"
+                        onChange={handleChange('name')}
+                        onBlur={handleBlur('name')}
+                        value={values.name}
+                        margin="0 0 8px 0"
+                        width="100%"
+                        height="56px"
+                        errors={errors.name && touched.name}
+                      />
+                      {errors.name && touched.name}
+                    </MDiv>
+
+                    <MDiv>
+                      <FormInput
+                        required
+                        id="price"
+                        placeholder="Price"
+                        name="price"
+                        autoComplete="current-price"
+                        onChange={handleChange('price')}
+                        onBlur={handleBlur('price')}
+                        value={values.price}
+                        margin="0 0 8px 0"
+                        width="100%"
+                        height="56px"
+                        errors={errors.price && touched.price}
+                      />
+                      {errors.price && touched.price}
+                    </MDiv>
+
+                    <MDiv
+                      display="flex"
+                      justifyContent="space-between"
+                      errors={errors.status && touched.status}
+                      value={(values.status = active.value)}
                     >
-                      <IExit />
-                      <CardTitle> Output</CardTitle>
-                    </MCard>
-                    {errors.status && touched.status}
-                  </MDiv>
+                      <MCard
+                        border={active.type == true}
+                        onClick={() =>
+                          setActive({ ...active, value: 'entry', type: true })
+                        }
+                        padding="0 40px"
+                        width="160px"
+                        height="56px"
+                      >
+                        <IEntrance />
+                        <CardTitle>Entry</CardTitle>
+                      </MCard>
+                      <MCard
+                        border={active.type == false}
+                        onClick={() =>
+                          setActive({ ...active, value: 'output', type: false })
+                        }
+                        padding="0 33px"
+                        width="160px"
+                        height="56px"
+                      >
+                        <IExit />
+                        <CardTitle> Output</CardTitle>
+                      </MCard>
+                      {errors.status && touched.status}
+                    </MDiv>
 
-                  <MDiv>
-                    <FormInput
-                      required
-                      id="category"
-                      placeholder="Category"
-                      name="category"
-                      autoComplete="current-category"
-                      onChange={handleChange('category')}
-                      onBlur={handleBlur('category')}
-                      value={values.category}
-                      margin="0 0 24px 0"
-                      errors={errors.category && touched.category}
-                    />
-                    {errors.category && touched.category}
-                  </MDiv>
+                    <MDiv>
+                      <FormInput
+                        required
+                        id="category"
+                        placeholder="Category"
+                        name="category"
+                        autoComplete="current-category"
+                        onChange={handleChange('category')}
+                        onBlur={handleBlur('category')}
+                        value={values.category}
+                        margin="0 0 24px 0"
+                        width="100%"
+                        height="56px"
+                        errors={errors.category && touched.category}
+                      />
+                      {errors.category && touched.category}
+                    </MDiv>
 
-                  <MDiv>
-                    <ButtonRegister onClick={() => handleSubmit()}>
-                      Register
-                    </ButtonRegister>
-                  </MDiv>
-                </>
-              )}
-            </Formik>
-          </MDiv>
-        </MItemsDiv>
-      </MContainer>
+                    <MDiv>
+                      <ButtonRegister
+                        width="100%"
+                        height="56px"
+                        onClick={() => handleSubmit()}
+                      >
+                        Register
+                      </ButtonRegister>
+                    </MDiv>
+                  </>
+                )}
+              </Formik>
+            </MDiv>
+          </MItemsDiv>
+        </ResponsiveContainerModal>
+      </>
     )
   }
 

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   max-width: ${props => (props.width ? props.width : '100%')};
   background-color: ${props => (props.background ? props.background : '')};
+  overflow-x: hidden;
 `
 
 export const ItemsDiv = styled.div`
@@ -109,9 +110,6 @@ export const LCard = styled.div`
 
   @media (max-width: 1375px) {
     margin: ${props => (props.margin ? props.margin : '0 20px 20px 0')};
-  }
-
-  @media (max-width: 900px) {
     height: ${props => (props.height ? props.height : '200px')};
     width: ${props => (props.width ? props.width : '100%')};
   }
@@ -159,6 +157,25 @@ export const MContainer = styled.div`
   background-color: ${props =>
     props.background ? props.background : 'rgba(0,0,0,0.5)'};
   position: ${props => (props.position ? props.position : 'absolute')};
+  display: block;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`
+
+export const ResponsiveContainerModal = styled.div`
+  height: ${props => (props.height ? props.height : '100%')};
+  width: ${props => (props.width ? props.width : '100%')};
+  bottom: ${props => (props.bottom ? props.bottom : '0')};
+  background-color: ${props =>
+    props.background ? props.background : 'rgba(0,0,0,0.5)'};
+  position: ${props => (props.position ? props.position : 'absolute')};
+  display: none;
+
+  @media (max-width: 900px) {
+    display: block;
+  }
 `
 
 export const MItemsDiv = styled.div`
@@ -173,6 +190,8 @@ export const MItemsDiv = styled.div`
   height: ${props => (props.height ? props.height : '588px')};
   width: ${props => (props.width ? props.width : '576px')};
   position: ${props => (props.position ? props.position : 'relative')};
+  bottom: ${props => (props.bottom ? props.bottom : '')};
+  top: ${props => (props.top ? props.top : '')};
 `
 
 export const MDiv = styled.div`
@@ -208,4 +227,28 @@ export const MCard = styled.div`
   cursor: ${props => (props.cursor ? props.cursor : 'pointer')};
   border: ${props =>
     props.border ? '3px solid #59E67F' : '1px solid #969CB2'};
+`
+
+export const Table = styled.div`
+  display: block;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`
+
+export const ResponsiveTable = styled.div`
+  display: ${props => (props.display ? props.display : 'none')};
+  align-items: ${props => (props.alignItems ? props.alignItems : 'center')};
+  margin: ${props => (props.margin ? props.margin : '0 0 16px 0')};
+  grid-template-columns: ${props =>
+    props.gridTemplateColumns ? props.gridTemplateColumns : ''};
+  align-items: ${props => (props.alignItems ? props.alignItems : 'center')};
+  justify-content: ${props =>
+    props.justifyContent ? props.justifyContent : 'space-between'};
+  border-radius: ${props => (props.borderRadius ? props.borderRadius : '5px')};
+
+  @media (max-width: 900px) {
+    display: block;
+  }
 `
