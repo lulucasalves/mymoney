@@ -175,7 +175,12 @@ export function Template(props) {
                   <CardTitle>Entrys</CardTitle>
                   <IEntrance />
                 </LDiv>
-                <CardValue>$ {states.positive},00</CardValue>
+                <CardValue>
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  }).format(states.positive)}
+                </CardValue>
               </LCard>
               <LCard>
                 <LDiv
@@ -187,7 +192,12 @@ export function Template(props) {
                   <CardTitle>Outputs</CardTitle>
                   <IExit />
                 </LDiv>
-                <CardValue>$ {states.negative},00</CardValue>
+                <CardValue>
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  }).format(states.negative)}
+                </CardValue>
               </LCard>
               <LCard background="#59E67F">
                 <LDiv
@@ -199,7 +209,12 @@ export function Template(props) {
                   <CardTitle color="#fff">Total</CardTitle>
                   <IDolarSign />
                 </LDiv>
-                <CardValue color="#fff">$ {states.total},00</CardValue>
+                <CardValue color="#fff">
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  }).format(states.total)}
+                </CardValue>
               </LCard>
             </LCardDiv>
 
@@ -219,7 +234,12 @@ export function Template(props) {
                     <CardTitle>Entrys</CardTitle>
                     <IEntrance />
                   </LDiv>
-                  <CardValue>$ {states.positive},00</CardValue>
+                  <CardValue>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(states.positive)}
+                  </CardValue>
                   <CardTitle color="#969cb2">
                     Last entry day {dateFormated}
                   </CardTitle>
@@ -234,7 +254,15 @@ export function Template(props) {
                     <CardTitle>Outputs</CardTitle>
                     <IExit />
                   </LDiv>
-                  <CardValue>$ {states.negative},00</CardValue>
+                  <CardValue>
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(states.negative)}
+                  </CardValue>
+                  <CardTitle color="#969cb2">
+                    Last entry day {dateFormated}
+                  </CardTitle>
                 </LCard>
                 <LCard background="#59E67F">
                   <LDiv
@@ -246,7 +274,15 @@ export function Template(props) {
                     <CardTitle color="#fff">Total</CardTitle>
                     <IDolarSign />
                   </LDiv>
-                  <CardValue color="#fff">$ {states.total},00</CardValue>
+                  <CardValue color="#fff">
+                    {new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL'
+                    }).format(states.total)}
+                  </CardValue>
+                  <CardTitle color="#FFF">
+                    Last entry day {dateFormated}
+                  </CardTitle>
                 </LCard>
               </Carousel>
             </LResponsiveCard>
@@ -275,10 +311,24 @@ export function Template(props) {
                 </thead>
                 <Tbody>
                   {items.map(item => {
+                    function normal() {
+                      if (item.value < 0) {
+                        return new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL'
+                        }).format(-item.value)
+                      } else {
+                        return new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL'
+                        }).format(item.value)
+                      }
+                    }
+
                     return (
                       <Tr key={item.id}>
                         <Td widh="350px">{item.title}</Td>
-                        <Td type={item.type}>$ {item.value},00</Td>
+                        <Td type={item.type}>{normal()}</Td>
                         <Td color="#969cb2">{item.category}</Td>
                         <Td widh="250px" color="#969cb2">
                           {item.date}
@@ -517,7 +567,7 @@ export function Template(props) {
             margin="0 auto 0 0"
             top="522px"
             padding="24px"
-            ref={modalOut}
+            //ref={modalOut}
             width="100%"
             height="446px"
             borderRadius="16px 16px 0 0"

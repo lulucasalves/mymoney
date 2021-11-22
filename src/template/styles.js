@@ -124,6 +124,9 @@ export const Td = styled.td`
   text-align: ${props => (props.textAlign ? props.textAlign : '')};
   line-height: ${props => (props.lineHeight ? props.lineHeight : '24px')};
   letter-spacing: ${props => (props.letterSpacing ? props.letterSpacing : '')};
+  border-radius: ${props => (props.borderRadius ? props.borderRadius : '5px')};
+  border: 0;
+
   color: ${props => {
     if (props.color) {
       return props.color
@@ -157,7 +160,9 @@ export const MContainer = styled.div`
   background-color: ${props =>
     props.background ? props.background : 'rgba(0,0,0,0.5)'};
   position: ${props => (props.position ? props.position : 'absolute')};
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 900px) {
     display: none;
@@ -183,13 +188,12 @@ export const MItemsDiv = styled.div`
   align-items: ${props => (props.alignItems ? props.alignItems : 'center')};
   justify-content: ${props =>
     props.justifyContent ? props.justifyContent : 'center'};
-  margin: ${props => (props.margin ? props.margin : '100px auto 0 auto')};
   padding: ${props => (props.padding ? props.padding : '64px 48px')};
   background: ${props => (props.background ? props.background : '#F0F2F5')};
   border-radius: ${props => (props.borderRadius ? props.borderRadius : '5px')};
   height: ${props => (props.height ? props.height : '588px')};
   width: ${props => (props.width ? props.width : '576px')};
-  position: ${props => (props.position ? props.position : 'relative')};
+  position: relative;
   bottom: ${props => (props.bottom ? props.bottom : '')};
   top: ${props => (props.top ? props.top : '')};
 `
