@@ -4,12 +4,6 @@
 <img src="https://github.com/lulucasalves/mymoney-project/blob/main/.github/image2.png" />
 <h3>Responsividade</h3>
 
-<div align="center">
-  <div style="display: flex; align-items: flex-start;">
-    <img src="https://github.com/lulucasalves/mymoney-project/blob/main/.github/image3.png" />
-    <img src="https://github.com/lulucasalves/mymoney-project/blob/main/.github/image4.png" />
-  </div>
-</div>
 <table>
   <tr>
     <td valign="top"><    <img src="https://github.com/lulucasalves/mymoney-project/blob/main/.github/image3.png" /></td>
