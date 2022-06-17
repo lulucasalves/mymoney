@@ -14,24 +14,14 @@ export function Exit(props) {
       <path
         d="M16 29.3333C23.3638 29.3333 29.3333 23.3638 29.3333 16C29.3333 8.63621 23.3638 2.66668 16 2.66667C8.63622 2.66667 2.66669 8.63621 2.66668 16C2.66668 23.3638 8.63622 29.3333 16 29.3333Z"
         stroke={redColor}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
       />
       <path
         d="M10.6667 16L16 21.3333L21.3334 16"
         stroke={redColor}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
       />
-      <path
-        d="M16 10.6667L16 21.3333"
-        stroke={redColor}
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
+      <path d="M16 10.6667L16 21.3333" stroke={redColor} strokeWidth="2" />
     </svg>
   )
 }
